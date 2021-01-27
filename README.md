@@ -8,7 +8,7 @@ bookbook JS-SDK
 * 页面中引入脚本
 
   ```js
-  <script src="https://ptio.cn/web/public/js_sdk/bookbook_sdk_0.3.0.min.js"></script>
+  <script src="https://ptio.cn/web/public/js_sdk/bookbook_sdk_0.3.1.min.js"></script>
   <script>
     function onSDKReady(callback) {
       if (window.bookbookBridge) {
