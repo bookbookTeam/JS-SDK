@@ -1,14 +1,14 @@
 bookbook JS-SDK
 ===========================
 
-当前版本: 0.3.1
+当前版本: 0.3.2
 
 ## 引入SDK
 
 * 页面中引入脚本
 
   ```js
-  <script src="https://ptio.cn/web/public/js_sdk/bookbook_sdk_0.3.1.min.js"></script>
+  <script src="https://ptio.cn/web/public/js_sdk/bookbook_sdk_0.3.2.min.js"></script>
   <script>
     function onSDKReady(callback) {
       if (window.bookbookBridge) {
@@ -158,14 +158,58 @@ bookbookBridge.ready(bb => {
     bb.canIUse({
       ability: 'weixin', // weixin: 是否已安装微信
       success: () => {
-        // 支持该能力 
+        // 支持该能力
       },
       fail: (e) => {
-        // 不支持该能力或状态未知 
+        // 不支持该能力或状态未知
       },
       complete: (res) => {
-        // res结构：{code: 0, msg: ''} 
-        // code：0:支持能力 1:不支持能力 -1:支持情况未知 
+        // res结构：{code: 0, msg: ''}
+        // code：0:支持能力 1:不支持能力 -1:支持情况未知
+      }
+    });
+  });
+  ```
+
+* `bb.downloadApp` 通过应用商店下载 App
+
+  ```js
+  bookbookBridge.ready(bb => {
+    bb.downloadApp({
+      data: {
+        // 安卓：如果 markets 中有 channel 对应的应用市场配置，优先跳应用市场，没有配置或跳转失败使用 download 中的下载链接兜底
+        "markets": [  // 应用市场配置
+          {
+            "channel": "string",  // App 发行渠道，参考：App 发布渠道
+            "appPkg": "string",  // 应用包名
+            "marketPkg": "string",  // 市场包名
+          }, {
+            ...
+          }
+        ],
+        "download": {  // 下载兜底，必须配置
+          "url": "string",  // apk 文件链接（域名有白名单限制）
+          "appName": "string",  // 应用名称
+          "appIcon": "string",  // 应用图标
+        },
+        "showConfirm": bool,  // 跳市场/下载前是否弹窗确认
+
+        // iOS：弹出应用市场下载弹窗
+        "iOSAppId": "string"  // 应用商店 iTunesItemIdentifier，数字格式
+      },
+      success: () => {
+        // 已经打开应用市场或者已经开始下载
+      },
+      fail: (e) => {
+        // e 的结构：{code: 1, msg: ''}
+        // code:
+        //   -1: App 版本不支持
+        //   1: 弹窗点击了取消
+        //   2: 无法开启下载
+      },
+      complete: (res) => {
+        // res 的结构：{code: 0, msg: ''} 
+        // code 和 fail 中的一致
       }
     });
   });
