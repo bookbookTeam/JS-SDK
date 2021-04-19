@@ -1,14 +1,14 @@
 bookbook JS-SDK
 ===========================
 
-当前版本: 0.3.2
+当前版本: 0.3.3
 
 ## 引入SDK
 
 * 页面中引入脚本
 
   ```js
-  <script src="https://ptio.cn/web/public/js_sdk/bookbook_sdk_0.3.2.min.js"></script>
+  <script src="https://ptio.cn/web/public/js_sdk/bookbook_sdk_0.3.3.min.js"></script>
   <script>
     function onSDKReady(callback) {
       if (window.bookbookBridge) {
@@ -214,3 +214,23 @@ bookbookBridge.ready(bb => {
     });
   });
   ```
+  
+* `bb.closeWebview` 关闭当前webview
+
+  ```js
+  bookbookBridge.ready(bb => {
+    bb.closeWebview({
+      success: () => {
+        // 成功回调
+      }, 
+      fail: () => {
+        // 失败回调
+      },
+      complete: () => {
+        // 无论成功、失败都回调
+      }
+    });
+  });
+  ```
+  
+  
